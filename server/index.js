@@ -89,7 +89,9 @@ async function enviarCorreo({ to, replyTo, subject, html }) {
   });
 }
 
-app.get('/api/health', (_req, res) => {
+const router = express.Router();
+
+router.get('/health', (_req, res) => {
   res.json({
     ok: true,
     email: mailerReady,
@@ -97,7 +99,7 @@ app.get('/api/health', (_req, res) => {
   });
 });
 
-app.post('/api/pedido', async (req, res) => {
+router.post('/pedido', async (req, res) => {
   const errorValidacion = validarPedido(req.body);
   if (errorValidacion) {
     return res.status(400).json({ ok: false, error: errorValidacion });
@@ -150,6 +152,11 @@ app.post('/api/pedido', async (req, res) => {
     });
   }
 });
+
+// Local: /api/health, /api/pedido
+// Vercel (rewrite a /api): a veces llega como /health, /pedido
+app.use('/api', router);
+app.use(router);
 
 module.exports = app;
 
