@@ -1,0 +1,68 @@
+<section class="min-h-screen bg-zinc-50 pt-32 pb-20 px-6 md:px-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12">
+      <p class="text-xs tracking-[4px] text-zinc-400 uppercase mb-3">Compra sin registro</p>
+      <h1 class="text-4xl md:text-6xl tracking-[5px] font-light">FINALIZAR PEDIDO</h1>
+    </div>
+
+    <div *ngIf="carrito.lineas().length; else sinProductos" class="grid lg:grid-cols-[1fr_380px] gap-12">
+      <form [formGroup]="formulario" (ngSubmit)="finalizarPedido()" class="bg-white border border-zinc-200 rounded-2xl p-6 md:p-9">
+        <h2 class="text-xl tracking-[3px] mb-7">DATOS DE ENVÍO</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          <label class="block"><span class="text-sm">Nombre</span><input formControlName="nombre" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('nombre')" class="text-red-600">Introduce tu nombre.</small></label>
+          <label class="block"><span class="text-sm">Apellidos</span><input formControlName="apellidos" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('apellidos')" class="text-red-600">Introduce tus apellidos.</small></label>
+          <label class="block"><span class="text-sm">Correo electrónico</span><input type="email" formControlName="email" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('email')" class="text-red-600">Introduce un correo válido.</small></label>
+          <label class="block"><span class="text-sm">Teléfono</span><input formControlName="telefono" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('telefono')" class="text-red-600">Introduce un teléfono válido.</small></label>
+          <label class="block md:col-span-2"><span class="text-sm">Dirección</span><input formControlName="direccion" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('direccion')" class="text-red-600">Introduce la dirección de entrega.</small></label>
+          <label class="block"><span class="text-sm">Localidad</span><input formControlName="localidad" class="mt-2 w-full border rounded-lg px-4 py-3" /></label>
+          <label class="block"><span class="text-sm">Provincia</span><input formControlName="provincia" class="mt-2 w-full border rounded-lg px-4 py-3" /></label>
+          <label class="block"><span class="text-sm">Código postal</span><input formControlName="codigoPostal" inputmode="numeric" maxlength="5" class="mt-2 w-full border rounded-lg px-4 py-3" /><small *ngIf="campoInvalido('codigoPostal')" class="text-red-600">Debe tener 5 cifras.</small></label>
+          <label class="block md:col-span-2"><span class="text-sm">Notas del pedido (opcional)</span><textarea formControlName="notas" rows="3" class="mt-2 w-full border rounded-lg px-4 py-3"></textarea></label>
+        </div>
+
+        <h2 class="text-xl tracking-[3px] mt-10 mb-6">FORMA DE PAGO</h2>
+        <div class="space-y-3">
+          <label class="flex gap-3 border border-zinc-300 rounded-xl p-4 cursor-pointer has-[:checked]:border-black has-[:checked]:bg-zinc-50">
+            <input type="radio" formControlName="metodoPago" value="transferencia" />
+            <span><strong class="block">Transferencia bancaria</strong><small class="text-zinc-500">Recibirás los datos bancarios por correo para completar el pago.</small></span>
+          </label>
+          <label *ngIf="pagoOnlineDisponible" class="flex gap-3 border border-zinc-300 rounded-xl p-4 cursor-pointer has-[:checked]:border-black has-[:checked]:bg-zinc-50">
+            <input type="radio" formControlName="metodoPago" value="tarjeta" />
+            <span><strong class="block">Tarjeta (pago online)</strong><small class="text-zinc-500">Paga de forma segura con tarjeta. Te redirigiremos al checkout.</small></span>
+          </label>
+        </div>
+
+        <label class="flex gap-3 mt-6 text-sm items-start">
+          <input type="checkbox" formControlName="privacidad" class="mt-1" />
+          <span>Acepto la política de privacidad y el tratamiento de mis datos para gestionar este pedido.</span>
+        </label>
+        <small *ngIf="campoInvalido('privacidad')" class="text-red-600 block mt-2">Debes aceptar la política de privacidad.</small>
+
+        <p *ngIf="errorEnvio" class="mt-6 text-red-600 text-sm leading-relaxed">{{ errorEnvio }}</p>
+        <button type="submit" [disabled]="enviando" class="mt-8 w-full bg-black text-white border border-black py-4 tracking-[2px] text-sm hover:bg-white hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ enviando ? 'PROCESANDO PEDIDO...' : 'CONFIRMAR PEDIDO' }}
+        </button>
+      </form>
+
+      <aside class="bg-white border border-zinc-200 rounded-2xl p-7 h-fit lg:sticky lg:top-28">
+        <h2 class="text-xl tracking-[3px] mb-6">TU PEDIDO</h2>
+        <div class="space-y-4">
+          <div *ngFor="let linea of carrito.lineas()" class="flex gap-3 items-center">
+            <img [src]="linea.producto.ruta_imagen" class="w-16 h-16 object-contain bg-zinc-50 rounded-lg" [alt]="linea.producto['nombre producto']" />
+            <div class="flex-1"><p class="text-sm">{{ linea.producto['nombre producto'] }}</p><small class="text-zinc-500">Cantidad: {{ linea.cantidad }}</small></div>
+            <span class="text-sm">{{ linea.producto.precio * linea.cantidad | number:'1.2-2' }} €</span>
+          </div>
+        </div>
+        <div class="border-t mt-6 pt-5 space-y-3 text-sm">
+          <div class="flex justify-between"><span>Subtotal</span><span>{{ carrito.subtotal() | number:'1.2-2' }} €</span></div>
+          <div class="flex justify-between"><span>Envío</span><span>{{ carrito.gastosEnvio() === 0 ? 'Gratis' : (carrito.gastosEnvio() | number:'1.2-2') + ' €' }}</span></div>
+          <div class="flex justify-between text-lg font-medium border-t pt-4"><span>Total</span><span>{{ carrito.total() | number:'1.2-2' }} €</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <ng-template #sinProductos>
+      <div class="bg-white border rounded-2xl p-12 text-center"><p class="mb-6">No hay productos para finalizar el pedido.</p><a routerLink="/productos" class="inline-block bg-black text-white px-8 py-3">VER PRODUCTOS</a></div>
+    </ng-template>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+[
+  {
+    "nombre producto": "Crema de queso con flores",
+    "descripcion": "Una crema suave y delicada con el toque floral perfecto para sorprender en aperitivos, tablas de queso y ocasiones especiales.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/flores.png"
+  },
+  {
+    "nombre producto": "Mojo picón",
+    "descripcion": "El sabor canario más intenso en una salsa llena de carácter, ideal para papas, carnes, verduras y recetas con un toque picante.",
+    "precio": 5,
+    "ruta_imagen": "assets/productos_web/mojo_picon.png"
+  },
+  {
+    "nombre producto": "Mojo picón suave",
+    "descripcion": "Todo el sabor tradicional del mojo picón con un picante más ligero, perfecto para disfrutar en familia y acompañar cualquier plato.",
+    "precio": 5,
+    "ruta_imagen": "assets/productos_web/mojo_suave.png"
+  },
+  {
+    "nombre producto": "Crema de morcilla tipo Burgos",
+    "descripcion": "Una crema sabrosa y envolvente que convierte la morcilla de Burgos en un aperitivo irresistible, ideal para untar y compartir.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/morcilla.png"
+  },
+  {
+    "nombre producto": "Mojo verde",
+    "descripcion": "Fresco, aromático y lleno de sabor, este mojo verde realza pescados, papas, carnes y verduras con una auténtica esencia canaria.",
+    "precio": 5,
+    "ruta_imagen": "assets/productos_web/mojo_verde.png"
+  },
+  {
+    "nombre producto": "Almogrote 100g",
+    "descripcion": "Una crema de queso intensa y ligeramente picante, elaborada para disfrutar el auténtico sabor de La Gomera en cada bocado.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/almogrote.png"
+  },
+  {
+    "nombre producto": "Crema de queso con miel",
+    "descripcion": "La combinación perfecta entre el sabor del queso de cabra y la dulzura de la miel, ideal para tostadas, aperitivos y postres.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/miel.png"
+  },
+  {
+    "nombre producto": "Crema de rulo de cabra con mermelada de pimientos",
+    "descripcion": "Una mezcla cremosa, dulce y ligeramente intensa que une el queso de cabra con la mermelada de pimientos para crear un aperitivo único.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/pimientos.png"
+  },
+  {
+    "nombre producto": "Crema de queso con boletus",
+    "descripcion": "Una crema de queso de oveja con el aroma profundo del boletus, perfecta para dar un toque gourmet a tostadas, pastas y aperitivos.",
+    "precio": 4.5,
+    "ruta_imagen": "assets/productos_web/boletus.png"
+  }
+]

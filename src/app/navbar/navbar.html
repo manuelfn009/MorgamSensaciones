@@ -1,0 +1,262 @@
+<header
+  class="fixed top-0 left-0 z-50 w-full transition-all duration-300"
+  [ngClass]="{
+    'bg-black shadow-md': estaEnCarrito,
+    'bg-white/95 shadow-sm backdrop-blur-md':
+      !estaEnCarrito && (isScrolled || menuAbierto),
+    'bg-transparent':
+      !estaEnCarrito && !isScrolled && !menuAbierto
+  }"
+>
+  <nav
+    class="max-w-7xl mx-auto px-6 md:px-10 lg:px-16
+           h-20 flex items-center justify-between"
+  >
+
+    <!-- Logo -->
+    <a
+      routerLink="/"
+      (click)="cerrarMenu()"
+      class="text-xl md:text-2xl tracking-[5px] font-light transition-colors"
+      [ngClass]="{
+        'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+        'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+      }"
+      aria-label="Ir a inicio"
+    >
+      MORGAM
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <div class="hidden md:flex items-center gap-9">
+
+      <a
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="opacity-100"
+        class="text-sm tracking-[2px] uppercase opacity-75
+               hover:opacity-100 transition-all"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+      >
+        Inicio
+      </a>
+
+      <a
+        routerLink="/productos"
+        routerLinkActive="opacity-100"
+        class="text-sm tracking-[2px] uppercase opacity-75
+               hover:opacity-100 transition-all"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+      >
+        Productos
+      </a>
+
+      <a
+        routerLink="/acerca"
+        routerLinkActive="opacity-100"
+        class="text-sm tracking-[2px] uppercase opacity-75
+               hover:opacity-100 transition-all"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+      >
+        Nosotros
+      </a>
+
+      <a
+        routerLink="/contacto"
+        routerLinkActive="opacity-100"
+        class="text-sm tracking-[2px] uppercase opacity-75
+               hover:opacity-100 transition-all"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+      >
+        Contacto
+      </a>
+
+    </div>
+
+    <!-- Acciones -->
+    <div class="flex items-center gap-5">
+
+      <!-- Carrito -->
+      <a
+        routerLink="/carrito"
+        (click)="cerrarMenu()"
+        class="relative inline-flex items-center justify-center
+               hover:opacity-70 transition"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+        aria-label="Ver carrito"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.7"
+          stroke="currentColor"
+          class="w-6 h-6"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 2.25l1.5 1.5L6.6 14.4a1.5 1.5 0 001.45 1.1h8.9a1.5 1.5 0 001.45-1.1l1.35-5.15H5.25M9 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+          />
+        </svg>
+
+        <!-- Contador -->
+        <span
+          *ngIf="carritoService.cantidadTotal() > 0"
+          class="absolute -top-2.5 -right-2.5
+                 min-w-5 h-5 px-1
+                 flex items-center justify-center
+                 rounded-full text-[10px] font-semibold leading-none"
+          [ngClass]="{
+            'bg-white text-black': estaEnCarrito,
+            'bg-black text-white': !estaEnCarrito
+          }"
+        >
+          {{
+            carritoService.cantidadTotal() > 99
+              ? '99+'
+              : carritoService.cantidadTotal()
+          }}
+        </span>
+      </a>
+
+      <!-- Menú móvil -->
+      <button
+        type="button"
+        class="md:hidden inline-flex items-center justify-center w-9 h-9"
+        [ngClass]="{
+          'text-white': estaEnCarrito || (!isScrolled && !menuAbierto),
+          'text-black': !estaEnCarrito && (isScrolled || menuAbierto)
+        }"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        aria-label="Abrir o cerrar menú"
+      >
+        <svg
+          *ngIf="!menuAbierto"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-7 h-7"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+
+        <svg
+          *ngIf="menuAbierto"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-7 h-7"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+    </div>
+
+  </nav>
+
+  <!-- Menú móvil -->
+  <div
+    *ngIf="menuAbierto"
+    class="md:hidden border-t shadow-lg"
+    [ngClass]="{
+      'bg-black text-white border-zinc-800': estaEnCarrito,
+      'bg-white text-black border-zinc-200': !estaEnCarrito
+    }"
+  >
+    <div class="px-6 py-8 flex flex-col gap-6">
+
+      <a
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="font-medium"
+        (click)="cerrarMenu()"
+        class="text-sm tracking-[3px] uppercase"
+      >
+        Inicio
+      </a>
+
+      <a
+        routerLink="/productos"
+        routerLinkActive="font-medium"
+        (click)="cerrarMenu()"
+        class="text-sm tracking-[3px] uppercase"
+      >
+        Productos
+      </a>
+
+      <a
+        routerLink="/acerca"
+        routerLinkActive="font-medium"
+        (click)="cerrarMenu()"
+        class="text-sm tracking-[3px] uppercase"
+      >
+        Nosotros
+      </a>
+
+      <a
+        routerLink="/contacto"
+        routerLinkActive="font-medium"
+        (click)="cerrarMenu()"
+        class="text-sm tracking-[3px] uppercase"
+      >
+        Contacto
+      </a>
+
+      <a
+        routerLink="/carrito"
+        (click)="cerrarMenu()"
+        class="flex items-center justify-between border-t pt-6
+               text-sm tracking-[3px] uppercase"
+        [ngClass]="{
+          'border-zinc-800': estaEnCarrito,
+          'border-zinc-200': !estaEnCarrito
+        }"
+      >
+        <span>Carrito</span>
+
+        <span
+          class="min-w-6 h-6 px-1.5 flex items-center justify-center
+                 rounded-full text-xs"
+          [ngClass]="{
+            'bg-white text-black': estaEnCarrito,
+            'bg-black text-white': !estaEnCarrito
+          }"
+        >
+          {{ carritoService.cantidadTotal() }}
+        </span>
+      </a>
+
+    </div>
+  </div>
+</header>

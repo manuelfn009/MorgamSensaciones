@@ -1,0 +1,13 @@
+<p>pedido-confirmado works!</p>
+<section class="min-h-screen bg-zinc-50 pt-36 pb-24 px-6 flex items-center">
+  <div class="max-w-2xl mx-auto text-center bg-white border border-zinc-200 rounded-3xl p-10 md:p-16">
+    <div class="w-16 h-16 rounded-full bg-black text-white mx-auto flex items-center justify-center text-2xl mb-7">✓</div>
+    <p class="text-xs tracking-[4px] text-zinc-400 uppercase mb-3">Pedido recibido</p>
+    <h1 class="text-3xl md:text-5xl tracking-[4px] font-light mb-6">GRACIAS POR TU COMPRA</h1>
+    <p *ngIf="pagoOk" class="text-zinc-600 leading-relaxed mb-4">Tu pago se ha completado correctamente. Hemos enviado la confirmación a tu correo electrónico.</p>
+    <p *ngIf="!pagoOk && metodoTransferencia" class="text-zinc-600 leading-relaxed mb-4">Hemos registrado tu pedido y te hemos enviado un correo con el resumen y los datos bancarios para realizar la transferencia.</p>
+    <p *ngIf="!pagoOk && !metodoTransferencia" class="text-zinc-600 leading-relaxed mb-4">Hemos registrado tu pedido correctamente. Revisa tu correo electrónico para ver el resumen de la compra.</p>
+    <p class="font-medium mb-9">Número de pedido: {{ numero }}</p>
+    <a routerLink="/productos" class="inline-block bg-black text-white px-8 py-3 tracking-[2px] text-sm">SEGUIR COMPRANDO</a>
+  </div>
+</section>

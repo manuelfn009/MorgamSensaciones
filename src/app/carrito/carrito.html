@@ -1,0 +1,55 @@
+<section class="min-h-screen bg-zinc-50 pt-32 pb-20 px-6 md:px-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12">
+      <p class="text-xs tracking-[4px] text-zinc-400 uppercase mb-3">Tu selección</p>
+      <h1 class="text-4xl md:text-6xl tracking-[5px] font-light">CARRITO</h1>
+    </div>
+
+    <div *ngIf="carrito.lineas().length; else carritoVacio" class="grid lg:grid-cols-[1fr_380px] gap-12">
+      <div class="space-y-5">
+        <article *ngFor="let linea of carrito.lineas()" class="bg-white border border-zinc-200 rounded-2xl p-5 flex flex-col sm:flex-row gap-5">
+          <img [src]="linea.producto.ruta_imagen" [alt]="linea.producto['nombre producto']" class="w-full sm:w-36 h-36 object-contain bg-zinc-50 rounded-xl p-3" />
+
+          <div class="flex-1 flex flex-col">
+            <div class="flex justify-between gap-4">
+              <div>
+                <h2 class="text-lg tracking-[2px] uppercase">{{ linea.producto['nombre producto'] }}</h2>
+                <p class="text-sm text-zinc-500 mt-2">{{ linea.producto.precio | number:'1.2-2' }} € / unidad</p>
+              </div>
+              <button type="button" (click)="carrito.eliminar(linea.producto['nombre producto'])" class="text-zinc-400 hover:text-black" aria-label="Eliminar producto">✕</button>
+            </div>
+
+            <div class="mt-auto pt-6 flex items-center justify-between">
+              <div class="inline-flex items-center border border-zinc-300 rounded-lg overflow-hidden">
+                <button type="button" class="w-10 h-10 hover:bg-zinc-100" (click)="carrito.cambiarCantidad(linea.producto['nombre producto'], linea.cantidad - 1)">−</button>
+                <span class="w-10 text-center">{{ linea.cantidad }}</span>
+                <button type="button" class="w-10 h-10 hover:bg-zinc-100" (click)="carrito.cambiarCantidad(linea.producto['nombre producto'], linea.cantidad + 1)">+</button>
+              </div>
+              <strong>{{ linea.producto.precio * linea.cantidad | number:'1.2-2' }} €</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <aside class="bg-white border border-zinc-200 rounded-2xl p-7 h-fit lg:sticky lg:top-28">
+        <h2 class="text-xl tracking-[3px] mb-7">RESUMEN</h2>
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between"><span class="text-zinc-500">Subtotal</span><span>{{ carrito.subtotal() | number:'1.2-2' }} €</span></div>
+          <div class="flex justify-between"><span class="text-zinc-500">Envío</span><span>{{ carrito.gastosEnvio() === 0 ? 'Gratis' : (carrito.gastosEnvio() | number:'1.2-2') + ' €' }}</span></div>
+          <div class="border-t border-zinc-200 pt-4 flex justify-between text-lg font-medium"><span>Total</span><span>{{ carrito.total() | number:'1.2-2' }} €</span></div>
+        </div>
+        <p class="text-xs text-zinc-500 mt-5">Envío gratuito a partir de 45 €.</p>
+        <a routerLink="/checkout" class="mt-7 block text-center bg-black text-white border border-black py-4 tracking-[2px] text-sm hover:bg-white hover:text-black transition">FINALIZAR PEDIDO</a>
+        <a routerLink="/productos" class="mt-3 block text-center border border-zinc-300 py-3 tracking-[2px] text-xs hover:border-black transition">SEGUIR COMPRANDO</a>
+      </aside>
+    </div>
+
+    <ng-template #carritoVacio>
+      <div class="bg-white border border-zinc-200 rounded-2xl p-12 text-center">
+        <p class="text-xl mb-3">Tu carrito está vacío</p>
+        <p class="text-zinc-500 mb-8">Descubre nuestros productos y añade tus favoritos.</p>
+        <a routerLink="/productos" class="inline-block bg-black text-white px-8 py-3 tracking-[2px] text-sm">VER PRODUCTOS</a>
+      </div>
+    </ng-template>
+  </div>
+</section>

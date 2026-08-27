@@ -1,0 +1,194 @@
+<!-- HERO -->
+<div class="relative w-full h-screen overflow-hidden">
+
+  <img
+    id="heroImage"
+    src="assets/almogrote_mojo.png"
+    alt="Productos gourmet de Canarias"
+    class="w-full h-full object-cover scale-105"
+  />
+
+  <div
+    class="absolute inset-0 bg-gradient-to-r
+           from-black/75 via-black/45 to-black/10"
+  ></div>
+
+  <div class="absolute inset-0 flex items-center px-6 md:px-20">
+
+    <div class="max-w-2xl text-white">
+
+      <span
+        class="inline-block mb-5 text-xs md:text-sm
+               tracking-[4px] text-zinc-300 uppercase"
+      >
+        Sabores artesanales
+      </span>
+
+      <h1
+        class="text-4xl md:text-6xl lg:text-7xl
+               tracking-[6px] font-light mb-5"
+      >
+        MORGAM
+      </h1>
+
+      <p
+        class="text-lg md:text-2xl text-zinc-200
+               mb-9 leading-relaxed max-w-xl"
+      >
+        Descubre una selección gourmet creada para llevar el auténtico sabor
+        canario a tu mesa.
+      </p>
+
+      <a
+        routerLink="/productos"
+        class="inline-flex items-center justify-center
+               border border-white px-8 py-3
+               text-sm tracking-[2px]
+               hover:bg-white hover:text-black
+               transition-all duration-300"
+      >
+        EXPLORAR PRODUCTOS
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- PRODUCTOS DESTACADOS -->
+<section
+  id="productos"
+  class="bg-white py-20 md:py-24 px-6 md:px-20"
+>
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Encabezado -->
+    <div
+      class="mb-14 md:mb-16 text-center reveal"
+      appReveal
+    >
+      <span
+        class="inline-block mb-4 text-xs md:text-sm
+               tracking-[4px] text-zinc-400 uppercase"
+      >
+        Nuestra selección
+      </span>
+
+      <h2
+        class="text-3xl md:text-5xl
+               tracking-[6px] font-light mb-6"
+      >
+        PRODUCTOS DESTACADOS
+      </h2>
+
+      <p
+        class="text-zinc-500 max-w-xl
+               mx-auto leading-relaxed"
+      >
+        Sabores artesanales que convierten cada bocado en una experiencia única.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+             gap-x-10 gap-y-14 items-stretch"
+    >
+
+      <article
+        *ngFor="let producto of productosDestacados; let i = index"
+        class="group reveal flex flex-col h-full"
+        appReveal
+        [attr.data-delay]="i + 1"
+      >
+
+        <!-- Imagen -->
+        <div
+          class="relative overflow-hidden rounded-2xl
+                 mb-6 bg-zinc-50 border border-zinc-100"
+        >
+          <img
+            [src]="producto.ruta_imagen"
+            [alt]="producto['nombre producto']"
+            class="w-full h-80 md:h-96 object-contain p-6
+                   transition-transform duration-700
+                   group-hover:scale-105"
+          />
+
+          <div
+            class="absolute inset-0
+                   bg-gradient-to-t from-black/5 to-transparent
+                   opacity-0 group-hover:opacity-100
+                   transition-opacity duration-500"
+          ></div>
+
+          <span
+            class="absolute top-4 right-4
+                   bg-white/95 backdrop-blur-sm
+                   px-4 py-2 rounded-full
+                   text-sm font-medium shadow-sm"
+          >
+            {{ producto.precio | number:'1.2-2' }} €
+          </span>
+        </div>
+
+        <!-- Contenido -->
+        <div class="flex flex-col flex-1">
+
+          <h3
+            class="text-lg md:text-xl
+                   tracking-[3px] mb-3 uppercase"
+          >
+            {{ producto['nombre producto'] }}
+          </h3>
+
+          <p
+            class="text-zinc-500 text-sm
+                   mb-6 leading-relaxed"
+          >
+            {{ producto.descripcion }}
+          </p>
+
+          <div class="mt-auto">
+
+            <button
+              type="button"
+              (click)="agregarAlCarrito(producto)"
+              class="w-full bg-black text-white
+                     border border-black px-6 py-3.5
+                     text-sm tracking-[2px]
+                     hover:bg-white hover:text-black
+                     transition-all duration-300"
+            >
+              AÑADIR AL CARRITO
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- Ver todos -->
+    <div
+      class="text-center mt-16 md:mt-20 reveal"
+      appReveal
+      [attr.data-delay]="productosDestacados.length + 1"
+    >
+      <a
+        routerLink="/productos"
+        class="inline-block border border-black
+               px-10 py-3 text-sm tracking-[3px]
+               hover:bg-black hover:text-white
+               transition-all duration-300"
+      >
+        VER TODOS LOS PRODUCTOS
+      </a>
+    </div>
+
+  </div>
+</section>
